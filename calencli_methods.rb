@@ -63,3 +63,14 @@ def find_event(id, events)
   end
   finded_event
 end
+
+def show_hours(event)
+  start_hour = event["start_date"][11..15]
+  end_hour = event["end_date"][11..15]
+  print "Start_end: ".colorize(:light_cyan)
+  if end_hour.nil?
+    puts "It's an all day event"
+  else
+    puts "#{start_hour} #{end_hour}"
+  end
+end
