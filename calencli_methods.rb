@@ -174,3 +174,21 @@ def show_events_when_all_have_end_date(events)
     puts "(#{event['id']})".colorize(color)
   end
 end
+
+def show_day(day, events)
+  print "#{day.strftime('%a')} #{day.strftime('%b')} #{day.strftime('%d')}  " # Calendar
+  day_events = events.select { |event| day === Date.parse(event["start_date"]) }
+  if day_events.empty?
+    puts "              No events"
+  else
+    events_without_end_date = divide_events(day_events)[0]
+    events_with_end_date = divide_events(day_events)[1]
+    if events_without_end_date.empty?
+      show_events_when_all_have_end_date(events_with_end_date)
+    else
+      show_events_without_end_date(events_without_end_date)
+      show_events_with_end_date(events_with_end_date)
+    end
+  end
+  puts ""
+end
