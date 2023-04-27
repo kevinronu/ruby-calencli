@@ -101,3 +101,18 @@ def delete_event(events)
   events.delete(finded_event)
   puts "Event deleted"
 end
+
+def calendar_color(event)
+  case event["calendar"]
+  when "english"
+    :magenta
+  when "web-dev"
+    :red
+  when "soft-skills"
+    :green
+  when "default"
+    :default
+  else
+    :light_gray
+  end
+end
