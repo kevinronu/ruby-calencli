@@ -51,3 +51,15 @@ def check_start_end(dual_input)
   end
   dual_input
 end
+
+def find_event(id, events)
+  finded_event = events.find { |event| event["id"] == id }
+
+  while finded_event.nil?
+    puts "Invalid ID"
+    print "Event ID: ".colorize(:light_cyan)
+    id = gets.chomp.to_i
+    finded_event = events.find { |event| event["id"] == id }
+  end
+  finded_event
+end
