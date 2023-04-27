@@ -149,3 +149,13 @@ def show_events_without_end_date(events)
     puts "(#{event['id']})".colorize(color)
   end
 end
+
+def show_events_with_end_date(events)
+  events.each do |event|
+    color = hash_color(event)
+    print "            "
+    print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
+    print "#{event['title']} ".colorize(color)
+    puts "(#{event['id']})".colorize(color)
+  end
+end
