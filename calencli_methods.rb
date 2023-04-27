@@ -32,12 +32,12 @@ def check_start_before_end(dual_input)
 end
 
 def check_start_end(dual_input)
-  boolean1 = check_valid_hour(dual_input)
+  boolean1 = check_valid_hours(dual_input)
   until boolean1
     puts "Format: 'HH:MM HH:MM' or leave it empty"
     print "start_end: ".colorize(:light_cyan)
     dual_input = gets.chomp
-    boolean1 = check_valid_hour(dual_input)
+    boolean1 = check_valid_hours(dual_input)
   end
   boolean2 = check_correct_hours(dual_input)
   until boolean2
