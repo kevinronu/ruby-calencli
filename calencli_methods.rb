@@ -56,7 +56,7 @@ def find_event(id, events)
   finded_event = events.find { |event| event["id"] == id }
 
   while finded_event.nil?
-    puts "Invalid ID"
+    puts "Event not found"
     print "Event ID: ".colorize(:light_cyan)
     id = gets.chomp.to_i
     finded_event = events.find { |event| event["id"] == id }
@@ -93,4 +93,11 @@ def show_event(event)
   # puts event["notes"].to_s
   print "Guests: ".colorize(:light_cyan)
   puts event["guests"].join(", ")
+end
+
+def delete_event(events)
+  id = get_input("Event ID", "Cannot be blank").to_i
+  finded_event = find_event(id, events)
+  events.delete(finded_event)
+  puts "Event deleted"
 end
