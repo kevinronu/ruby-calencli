@@ -1,4 +1,7 @@
 require "date"
+require "colorize"
+require "colorized_string"
+require_relative "calencli_methods"
 
 # DATA
 id = 0
