@@ -152,7 +152,7 @@ end
 
 def show_events_with_end_date(events)
   events.each do |event|
-    color = hash_color(event)
+    color = calendar_color(event)
     print "            "
     print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
     print "#{event['title']} ".colorize(color)
@@ -162,7 +162,7 @@ end
 
 def show_events_when_all_have_end_date(events)
   events.each_with_index do |event, index|
-    color = hash_color(event)
+    color = calendar_color(event)
     if index.zero?
       print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
       print "#{event['title']} ".colorize(color)
