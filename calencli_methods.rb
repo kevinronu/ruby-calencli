@@ -8,3 +8,9 @@ def check_empty(input, text, msg = "")
   end
   input
 end
+
+def check_valid_hour(new_input)
+  return true if new_input.empty? || new_input.match?(/^(?:[01]\d|2[0-3]):[0-5]\d$/)
+
+  false
+end

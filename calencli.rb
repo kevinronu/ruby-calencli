@@ -103,5 +103,5 @@ events = [
     "end_date" => "",
     "notes" => "",
     "guests" => [],
-    "calendar" => "web-dev" },
+    "calendar" => "web-dev" }
 ]
