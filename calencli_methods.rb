@@ -117,7 +117,21 @@ def calendar_color(event)
   end
 end
 
-# Método que ordena un array de hashes por un value
+# Method that sorts an array of hashes by a value
 def sort_array_hashes(array_of_hashes, sort_by)
   array_of_hashes.sort_by! { |hash| hash[sort_by] }
+end
+
+def divide_events(events)
+  events_without_end_date = []
+  events_with_end_date = []
+  events.each do |event|
+    if event["end_date"] == ""
+      events_without_end_date.push(event)
+    else
+      events_with_end_date.push(event)
+    end
+  end
+  sort_array_hashes(events_with_end_date, "start_date")
+  [events_without_end_date, events_with_end_date]
 end
