@@ -74,3 +74,23 @@ def show_hours(event)
     puts "#{start_hour} #{end_hour}"
   end
 end
+
+def show_event(event)
+  # id = get_input("Event ID", "Cannot be blank").to_i
+  # finded_event = find_event(id, events)
+
+  print "Date: ".colorize(:light_cyan)
+  puts event["start_date"].split("T")[0]
+  print "Title: ".colorize(:light_cyan)
+  puts event["title"]
+  # puts event["title"].to_s
+  print "Calendar: ".colorize(:light_cyan)
+  puts event["calendar"]
+  # puts event["calendar"].to_s
+  show_hours(event)
+  print "Notes: ".colorize(:light_cyan)
+  puts event["notes"]
+  # puts event["notes"].to_s
+  print "Guests: ".colorize(:light_cyan)
+  puts event["guests"].join(", ")
+end
