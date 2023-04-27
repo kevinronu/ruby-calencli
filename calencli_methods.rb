@@ -1,10 +1,13 @@
 require "date"
+require "colorize"
 # Methods
 
-def check_empty(input, text, msg = "")
+def get_input(prompt, msg = "")
+  print "#{prompt}: ".colorize(:light_cyan)
+  input = gets.chomp
   while input.empty?
     puts msg
-    print "#{text}: ".colorize(:light_cyan)
+    print "#{prompt}: ".colorize(:light_cyan)
     input = gets.chomp
   end
   input
