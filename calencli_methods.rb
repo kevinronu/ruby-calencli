@@ -141,10 +141,9 @@ def show_events_without_end_date(events)
     color = calendar_color(event)
     if index.zero?
       print "              "
-      print "#{event['title']} ".colorize(color)
-      puts "(#{event['id']})".colorize(color)
+    else
+      print "                          "
     end
-    print "                          "
     print "#{event['title']} ".colorize(color)
     puts "(#{event['id']})".colorize(color)
   end
@@ -163,12 +162,7 @@ end
 def show_events_when_all_have_end_date(events)
   events.each_with_index do |event, index|
     color = calendar_color(event)
-    if index.zero?
-      print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
-      print "#{event['title']} ".colorize(color)
-      puts "(#{event['id']})".colorize(color)
-    end
-    print "            "
+    print "            " unless index.zero?
     print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
     print "#{event['title']} ".colorize(color)
     puts "(#{event['id']})".colorize(color)

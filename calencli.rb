@@ -126,7 +126,9 @@ while action != "exit"
   when "create"
     "create_method"
   when "show"
-    show(events)
+    id = get_input("Event ID", "Cannot be blank").to_i
+    finded_event = find_event(id, events)
+    show_event(finded_event)
   when "update"
     "update_method"
   when "delete"
