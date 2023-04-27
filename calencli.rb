@@ -110,10 +110,10 @@ events = [
 
 now_date = DateTime.now
 
-$menu = "#{'-' * 78} \nlist | create | show | update | delete | next | prev | exit\n"
+menu = "#{'-' * 78} \nlist | create | show | update | delete | next | prev | exit\n"
 
 show_week(events, now_date, "Welcome to CalenCLI")
-print $menu.colorize(:light_cyan)
+print menu.colorize(:light_cyan)
 
 action = nil
 while action != "exit"
@@ -122,25 +122,26 @@ while action != "exit"
   case action
   when "list"
     show_week(events, now_date, "Welcome to CalenCLI")
-    print $menu.colorize(:light_cyan)
+    print menu.colorize(:light_cyan)
   when "create"
     "create_method"
   when "show"
-    id = get_input("Event ID", "Cannot be blank").to_i
+    id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
     finded_event = find_event(id, events)
     show_event(finded_event)
   when "update"
-    "update_method"
+    id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
+    update_events(events, id)
   when "delete"
     delete_event(events)
   when "next"
     show_week(events, now_date + 7, "------CalenCLI-----")
     now_date += 7
-    print $menu.colorize(:light_cyan)
+    print menu.colorize(:light_cyan)
   when "prev"
     show_week(events, now_date - 7, "------CalenCLI-----")
     now_date -= 7
-    print $menu.colorize(:light_cyan)
+    print menu.colorize(:light_cyan)
   when "exit"
     puts "\nThanks for using calenCLI".colorize(:light_blue)
   else

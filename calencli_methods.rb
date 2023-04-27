@@ -2,9 +2,11 @@ require "date"
 require "colorize"
 # Methods
 
-def get_input(prompt, msg = "")
+def get_input(prompt:, msg: "", required: true)
   print "#{prompt}: ".colorize(:light_cyan)
   input = gets.chomp
+  return input unless required
+
   while input.empty?
     puts msg
     print "#{prompt}: ".colorize(:light_cyan)
@@ -20,6 +22,20 @@ def check_valid_hours(dual_input)
   hour2 = dual_input[6..10]
   regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/
   hour1.match?(regex) && hour2.match?(regex)
+end
+
+def valid_date
+  print "Date: ".colorize(:light_cyan)
+  input = gets.chomp
+  return input if input.empty?
+
+  regex = /^\d{4}-\d{2}-\d{2}$/
+  until input.match?(regex) || input.empty?
+    puts "Type a valid date 'YYYY-MM-DD' or leave it empty"
+    print "Date: ".colorize(:light_cyan)
+    input = gets.chomp
+  end
+  input
 end
 
 def check_start_before_end(dual_input)
@@ -42,12 +58,12 @@ def check_start_end(dual_input)
     dual_input = gets.chomp
     boolean1 = check_valid_hours(dual_input)
   end
-  boolean2 = check_correct_hours(dual_input)
+  boolean2 = check_start_before_end(dual_input)
   until boolean2
     puts "Cannot end before start"
     print "start_end: ".colorize(:light_cyan)
     dual_input = gets.chomp
-    boolean2 = check_correct_hours(dual_input)
+    boolean2 = check_start_before_end(dual_input)
   end
   dual_input
 end
@@ -96,7 +112,7 @@ def show_event(event)
 end
 
 def delete_event(events)
-  id = get_input("Event ID", "Cannot be blank").to_i
+  id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
   finded_event = find_event(id, events)
   events.delete(finded_event)
   puts "Event deleted"
@@ -195,4 +211,45 @@ def show_week(events, date = DateTime.now, msg = "")
     show_day(day, events)
     day += 1
   end
+end
+
+def valid_empty(input, event, key)
+  input.empty? ? event[key] : input
+end
+
+def update_events(events, id)
+  event = find_event(id, events)
+
+  date = valid_date
+  date.empty? ? event["start_date"][0..9] : date
+
+  title = get_input(prompt: "Title", required: false)
+  title = valid_empty(title, event, "title")
+
+  calendar = get_input(prompt: "Calendar", required: false)
+  calendar = valid_empty(calendar, event, "calendar")
+
+  start_end = get_input(prompt: "start_end", required: false)
+  start_end = check_start_end(start_end)
+
+  start_date = "#{date}T#{start_end[0..4]}:00-05:00"
+  end_date = "#{date}T#{start_end[6..10]}:00-05:00"
+  if start_end.empty?
+    start_date = "00:00"
+    end_date = ""
+  end
+
+  notes = get_input(prompt: "Notes", required: false)
+  notes = valid_empty(notes, event, "notes")
+
+  guests = get_input(prompt: "Guests", required: false).split(", ")
+  guests = valid_empty(guests, event, "guests")
+
+  hash = { "start_date" => "#{date}T#{start_date}:00-05:00",
+           "title" => title, "end_date" => end_date,
+           "notes" => notes, "guests" => guests,
+           "calendar" => calendar }
+
+  event.merge!(hash)
+  events[events.index(event)].merge!(event)
 end
