@@ -116,3 +116,8 @@ def calendar_color(event)
     :light_gray
   end
 end
+
+# Método que ordena un array de hashes por un value
+def sort_array_hashes(array_of_hashes, sort_by)
+  array_of_hashes.sort_by! { |hash| hash[sort_by] }
+end
