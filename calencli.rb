@@ -106,3 +106,42 @@ events = [
     "calendar" => "web-dev" }
 ]
 
+# Main Program
+
+now_date = DateTime.now
+
+$menu = "#{'-' * 78} \nlist | create | show | update | delete | next | prev | exit\n"
+
+show_week(events, now_date, "Welcome to CalenCLI")
+print $menu.colorize(:light_cyan)
+
+action = nil
+while action != "exit"
+  print "\naction: ".colorize(:light_yellow)
+  action = gets.chomp
+  case action
+  when "list"
+    show_week(events, now_date, "Welcome to CalenCLI")
+    print $menu.colorize(:light_cyan)
+  when "create"
+    "create_method"
+  when "show"
+    show(events)
+  when "update"
+    "update_method"
+  when "delete"
+    delete_event(events)
+  when "next"
+    show_week(events, now_date + 7, "------CalenCLI-----")
+    now_date += 7
+    print $menu.colorize(:light_cyan)
+  when "prev"
+    show_week(events, now_date - 7, "------CalenCLI-----")
+    now_date -= 7
+    print $menu.colorize(:light_cyan)
+  when "exit"
+    puts "\nThanks for using calenCLI".colorize(:light_blue)
+  else
+    puts "Invalid action".colorize(:light_white)
+  end
+end
