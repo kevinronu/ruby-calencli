@@ -135,3 +135,17 @@ def divide_events(events)
   sort_array_hashes(events_with_end_date, "start_date")
   [events_without_end_date, events_with_end_date]
 end
+
+def show_events_without_end_date(events)
+  events.each_with_index do |event, index|
+    color = calendar_color(event)
+    if index.zero?
+      print "              "
+      print "#{event['title']} ".colorize(color)
+      puts "(#{event['id']})".colorize(color)
+    end
+    print "                          "
+    print "#{event['title']} ".colorize(color)
+    puts "(#{event['id']})".colorize(color)
+  end
+end
