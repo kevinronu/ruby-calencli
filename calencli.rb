@@ -124,7 +124,7 @@ while action != "exit"
     show_week(events, now_date, "Welcome to CalenCLI")
     print menu.colorize(:light_cyan)
   when "create"
-    "create_method"
+    create_event(events, id.next)
   when "show"
     id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
     event_found = find_event(id, events)

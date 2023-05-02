@@ -1,5 +1,5 @@
-require "date"
-require "colorize"
+# require "date"
+# require "colorize"
 # Methods
 
 def get_input(prompt:, msg: "", required: true)
@@ -20,18 +20,20 @@ def check_valid_hours(dual_input)
 
   hour1 = dual_input[0..4]
   hour2 = dual_input[6..10]
+  return false if hour2.nil?
+
   regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/
   hour1.match?(regex) && hour2.match?(regex)
 end
 
-def valid_date
+def valid_date(required: true, msg: "")
   print "Date: ".colorize(:light_cyan)
   input = gets.chomp
-  return input if input.empty?
+  # return input if input.empty?
 
   regex = /^\d{4}-\d{2}-\d{2}$/
-  until input.match?(regex) || input.empty?
-    puts "Type a valid date 'YYYY-MM-DD' or leave it empty"
+  until input.match?(regex) || (input.empty? && !required)
+    puts "Type a valid date 'YYYY-MM-DD'#{msg}"
     print "Date: ".colorize(:light_cyan)
     input = gets.chomp
   end
@@ -92,21 +94,15 @@ def show_hours(event)
 end
 
 def show_event(event)
-  # id = get_input("Event ID", "Cannot be blank").to_i
-  # event_found = find_event(id, events)
-
   print "Date: ".colorize(:light_cyan)
   puts event["start_date"].split("T")[0]
   print "Title: ".colorize(:light_cyan)
   puts event["title"]
-  # puts event["title"].to_s
   print "Calendar: ".colorize(:light_cyan)
   puts event["calendar"]
-  # puts event["calendar"].to_s
   show_hours(event)
   print "Notes: ".colorize(:light_cyan)
   puts event["notes"]
-  # puts event["notes"].to_s
   print "Guests: ".colorize(:light_cyan)
   puts event["guests"].join(", ")
 end
@@ -220,8 +216,8 @@ end
 def update_events(events, id)
   event = find_event(id, events)
 
-  date = valid_date
-  date.empty? ? event["start_date"][0..9] : date
+  date = valid_date(required: false, msg: " or leave it empty")
+  date = date.empty? ? event["start_date"][0..9] : date
 
   title = get_input(prompt: "Title", required: false)
   title = valid_empty(title, event, "title")
@@ -235,7 +231,7 @@ def update_events(events, id)
   start_date = "#{date}T#{start_end[0..4]}:00-05:00"
   end_date = "#{date}T#{start_end[6..10]}:00-05:00"
   if start_end.empty?
-    start_date = "00:00"
+    start_date = "#{date}T#00:00:00-05:00"
     end_date = ""
   end
 
@@ -245,11 +241,41 @@ def update_events(events, id)
   guests = get_input(prompt: "Guests", required: false).split(", ")
   guests = valid_empty(guests, event, "guests")
 
-  hash = { "start_date" => "#{date}T#{start_date}:00-05:00",
+  hash = { "start_date" => start_date,
            "title" => title, "end_date" => end_date,
            "notes" => notes, "guests" => guests,
            "calendar" => calendar }
 
   event.merge!(hash)
   events[events.index(event)].merge!(event)
+end
+
+def create_event(events, id)
+  date = valid_date(required: true)
+
+  title = get_input(prompt: "Title", msg: "Cannot be blank", required: true)
+
+  calendar = get_input(prompt: "Calendar", required: false)
+
+  start_end = get_input(prompt: "start_end", required: false)
+  start_end = check_start_end(start_end)
+
+  start_date = "#{date}T#{start_end[0..4]}:00-05:00"
+  end_date = "#{date}T#{start_end[6..10]}:00-05:00"
+  if start_end.empty?
+    start_date = "#{date}T#00:00:00-05:00"
+    end_date = ""
+  end
+
+  notes = get_input(prompt: "Notes", required: false)
+
+  guests = get_input(prompt: "Guests", required: false).split(", ")
+
+  hash = { "id" => id,
+           "start_date" => start_date,
+           "title" => title, "end_date" => end_date,
+           "notes" => notes, "guests" => guests,
+           "calendar" => calendar }
+
+  events << hash
 end
