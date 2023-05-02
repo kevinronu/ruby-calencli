@@ -46,8 +46,11 @@ def check_start_before_end(dual_input)
   hour1 = dual_input[0..4]
   hour2 = dual_input[6..10]
   # DateTime.strptime('02/22/2018 5:20 PM', '%m/%d/%Y %l:%M %p')
-  date1 = DateTime.strptime("2023-04-26 #{hour1}", "%Y-%m-%d %H:%M")
-  date2 = DateTime.strptime("2023-04-26 #{hour2}", "%Y-%m-%d %H:%M")
+  # today = DateTime.now.strftime("%Y-%m-%d")
+  # date1 = DateTime.parse("#{today} #{hour1}")
+  # date2 = DateTime.parse("#{today} #{hour2}")
+  date1 = DateTime.parse(hour1)
+  date2 = DateTime.parse(hour2)
 
   date1 < date2
 end
@@ -83,12 +86,14 @@ def find_event(id, events)
 end
 
 def show_hours(event)
-  start_hour = event["start_date"][11..15]
-  end_hour = event["end_date"][11..15]
+  start_date = DateTime.parse(event["start_date"])
+  start_hour = start_date.strftime("%H:%M")
   print "Start_end: ".colorize(:light_cyan)
-  if end_hour.nil?
+  if event["end_date"].empty?
     puts "It's an all day event"
   else
+    end_date = DateTime.parse(event["end_date"])
+    end_hour = end_date.strftime("%H:%M")
     puts "#{start_hour} #{end_hour}"
   end
 end
@@ -163,9 +168,13 @@ end
 
 def show_events_with_end_date(events)
   events.each do |event|
+    start_date = DateTime.parse(event["start_date"])
+    start_hour = start_date.strftime("%H:%M")
+    end_date = DateTime.parse(event["end_date"])
+    end_hour = end_date.strftime("%H:%M")
     color = calendar_color(event)
     print "            "
-    print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
+    print "#{start_hour} - #{end_hour} ".colorize(color)
     print "#{event['title']} ".colorize(color)
     puts "(#{event['id']})".colorize(color)
   end
@@ -173,9 +182,13 @@ end
 
 def show_events_when_all_have_end_date(events)
   events.each_with_index do |event, index|
+    start_date = DateTime.parse(event["start_date"])
+    start_hour = start_date.strftime("%H:%M")
+    end_date = DateTime.parse(event["end_date"])
+    end_hour = end_date.strftime("%H:%M")
     color = calendar_color(event)
     print "            " unless index.zero?
-    print "#{event['start_date'][11..15]} - #{event['end_date'][11..15]} ".colorize(color)
+    print "#{start_hour} - #{end_hour} ".colorize(color)
     print "#{event['title']} ".colorize(color)
     puts "(#{event['id']})".colorize(color)
   end
