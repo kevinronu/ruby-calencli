@@ -204,7 +204,7 @@ def show_day(day, events)
 end
 
 def show_week(events, date = DateTime.now, msg = "")
-  day = date - (date.strftime("%u").to_i - 1) # Lunes de esta fecha
+  day = date - (date.strftime("%u").to_i - 1) # Monday of this week
   puts "#{'-' * 29}#{msg}#{'-' * 30}".colorize(:light_cyan)
   puts ""
   7.times do |_number|
