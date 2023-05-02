@@ -69,15 +69,15 @@ def check_start_end(dual_input)
 end
 
 def find_event(id, events)
-  finded_event = events.find { |event| event["id"] == id }
+  event_found = events.find { |event| event["id"] == id }
 
-  while finded_event.nil?
+  while event_found.nil?
     puts "Event not found"
     print "Event ID: ".colorize(:light_cyan)
     id = gets.chomp.to_i
-    finded_event = events.find { |event| event["id"] == id }
+    event_found = events.find { |event| event["id"] == id }
   end
-  finded_event
+  event_found
 end
 
 def show_hours(event)
@@ -93,7 +93,7 @@ end
 
 def show_event(event)
   # id = get_input("Event ID", "Cannot be blank").to_i
-  # finded_event = find_event(id, events)
+  # event_found = find_event(id, events)
 
   print "Date: ".colorize(:light_cyan)
   puts event["start_date"].split("T")[0]
@@ -113,8 +113,8 @@ end
 
 def delete_event(events)
   id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
-  finded_event = find_event(id, events)
-  events.delete(finded_event)
+  event_found = find_event(id, events)
+  events.delete(event_found)
   puts "Event deleted"
 end
 

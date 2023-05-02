@@ -127,8 +127,8 @@ while action != "exit"
     "create_method"
   when "show"
     id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
-    finded_event = find_event(id, events)
-    show_event(finded_event)
+    event_found = find_event(id, events)
+    show_event(event_found)
   when "update"
     id = get_input(prompt: "Event ID", msg: "Cannot be blank").to_i
     update_events(events, id)
