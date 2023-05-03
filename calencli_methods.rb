@@ -196,7 +196,7 @@ end
 
 def show_day(day, events)
   print "#{day.strftime('%a')} #{day.strftime('%b')} #{day.strftime('%d')}  " # Calendar
-  day_events = events.select { |event| day === Date.parse(event["start_date"]) }
+  day_events = events.select { |event| day.strftime("%Y-%m-%d") == event["start_date"][0..9] }
   if day_events.empty?
     puts "              No events"
   else
