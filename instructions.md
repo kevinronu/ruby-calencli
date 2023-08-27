@@ -78,7 +78,7 @@ Sun Feb 19                No events
 ------------------------------------------------------------------------------
 list | create | show | update | delete | next | prev | exit
 
-action: 
+action:
 ```
 
 ### Create an event (happy)
@@ -157,7 +157,7 @@ When the user doesn't input a date:
 list | create | show | update | delete | next | prev | exit
 
 action: create
-date: 
+date:
 Type a valid date: YYYY-MM-DD
 date: 2023-02-18
 ```
@@ -170,7 +170,7 @@ list | create | show | update | delete | next | prev | exit
 
 action: create
 date: 2023-02-18
-title: 
+title:
 Cannot be blank
 title: Push extended project!
 ```
@@ -195,7 +195,7 @@ start_end: 23:00 23:30
 ### List events
 
 If the user inputs the word `list` the program should display the welcome
-header, the agenda, the footer and prompt the user for the next action (the same 
+header, the agenda, the footer and prompt the user for the next action (the same
 as when the program started).
 
 Notice that the events without a specific start and end time are shown as "daily
@@ -232,7 +232,7 @@ Sun Feb 19                No events
 ------------------------------------------------------------------------------
 list | create | show | update | delete | next | prev | exit
 
-action: 
+action:
 ```
 
 ### Show an event
@@ -325,7 +325,7 @@ guests: Paulo, Andre, Diego
 ------------------------------------------------------------------------------
 list | create | show | update | delete | next | prev | exit
 
-action: 
+action:
 ```
 
 ### Delete an event (and list again to verify)
@@ -462,7 +462,7 @@ Sun Feb 12                No events
 ------------------------------------------------------------------------------
 list | create | show | update | delete | next | prev | exit
 
-action: 
+action:
 ```
 
 ## Exit the program
@@ -475,5 +475,5 @@ list | create | show | update | delete | next | prev | exit
 
 action: exit
 Thanks for using calenCLI
-$ 
+$
 ```
